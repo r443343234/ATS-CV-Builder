@@ -1,0 +1,57 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Stores user-specific settings and PII.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Resume": {
+      "title": "Resume",
+      "description": "Stores resume data for a user.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "data": { "type": "object" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "data"]
+    },
+    "JobApplication": {
+      "title": "Job Application",
+      "description": "Tracks job applications.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "company": { "type": "string" },
+        "position": { "type": "string" },
+        "status": { "type": "string", "enum": ["applied", "interview", "accepted", "rejected"] },
+        "date": { "type": "string", "format": "date" }
+      },
+      "required": ["uid", "company", "position", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile document."
+    },
+    "/users/{userId}/resumes/{resumeId}": {
+      "schema": "Resume",
+      "description": "Collection of resumes for a user."
+    },
+    "/users/{userId}/applications/{appId}": {
+      "schema": "JobApplication",
+      "description": "Collection of job applications for a user."
+    }
+  }
+}
